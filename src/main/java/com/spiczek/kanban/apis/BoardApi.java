@@ -51,6 +51,11 @@ public class BoardApi extends KanbanApi {
         return item;
     }
 
+    public void changeItemStatus(String groupIdFrom, String groupIdTo, String itemId) {
+        mongo.updateFirst(query(where("_id").is(groupIdFrom)), new Update().pull("itemIds", itemId), Group.class);
+        mongo.updateFirst(query(where("_id").is(groupIdTo)), new Update().push("itemIds", itemId), Group.class);
+    }
+
     public List<GroupResult> getBoard(List<String> groupIds) {
         List<Group> groups = mongo.find(query(where("_id").in(groupIds)), Group.class);
 

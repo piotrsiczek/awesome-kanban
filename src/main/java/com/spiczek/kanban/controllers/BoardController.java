@@ -8,6 +8,7 @@ import com.spiczek.kanban.model.GroupResult;
 import com.spiczek.kanban.model.data.BoardData;
 import com.spiczek.kanban.model.data.GroupData;
 import com.spiczek.kanban.model.data.ItemData;
+import com.spiczek.kanban.model.data.ItemStatusData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,5 +47,10 @@ public class BoardController {
     @RequestMapping(value = "/item", method = RequestMethod.POST)
     public Item createItem(@RequestBody ItemData data) {
         return api.createItem(data.getText(), data.getGroupId());
+    }
+
+    @RequestMapping(value = "/item/status", method = RequestMethod.PUT)
+    public void changeItemStatus(@RequestBody ItemStatusData data) {
+        api.changeItemStatus(data.getGroupIdFrom(), data.getGroupIdTo(), data.getItemId());
     }
 }

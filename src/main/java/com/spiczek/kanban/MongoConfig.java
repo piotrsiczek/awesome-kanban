@@ -52,10 +52,9 @@ public class MongoConfig {
 
     @Bean
     public MappingMongoConverter mappingMongoConverter(MongoDbFactory factory, MongoMappingContext context) {
-//        todo
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(factory);
         MappingMongoConverter mappingConverter = new MappingMongoConverter(dbRefResolver, context);
-        mappingConverter.setTypeMapper(new DefaultMongoTypeMapper("_class"));
+        mappingConverter.setTypeMapper(new DefaultMongoTypeMapper(null));
 
         return mappingConverter;
     }
