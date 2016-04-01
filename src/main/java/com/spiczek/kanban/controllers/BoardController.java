@@ -1,0 +1,50 @@
+package com.spiczek.kanban.controllers;
+
+import com.spiczek.kanban.apis.BoardApi;
+import com.spiczek.kanban.collections.Board;
+import com.spiczek.kanban.collections.Group;
+import com.spiczek.kanban.collections.Item;
+import com.spiczek.kanban.model.GroupResult;
+import com.spiczek.kanban.model.data.BoardData;
+import com.spiczek.kanban.model.data.GroupData;
+import com.spiczek.kanban.model.data.ItemData;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+/**
+ * @author Piotr Siczek
+ */
+@RestController
+public class BoardController {
+
+    private BoardApi api;
+
+    @Autowired
+    public BoardController(BoardApi api) {
+        this.api = api;
+    }
+
+    @RequestMapping("/board")
+    public ResponseEntity<List<GroupResult>> getBoard(@RequestParam(name = "groupId") List<String> groupIds) {
+        return new ResponseEntity<>(api.getBoard(groupIds), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/board", method = RequestMethod.POST)
+    public Board createBoard(@RequestBody BoardData data) {
+        return api.createBoard(data.getOwnerId(), data.getTitle());
+    }
+
+    @RequestMapping(value = "/group", method = RequestMethod.POST)
+    public Group createGroup(@RequestBody GroupData data) {
+        return api.createGroup(data.getTitle(), data.getBoardId());
+    }
+
+    @RequestMapping(value = "/item", method = RequestMethod.POST)
+    public Item createItem(@RequestBody ItemData data) {
+        return api.createItem(data.getText(), data.getGroupId());
+    }
+}
