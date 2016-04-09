@@ -9,11 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
+
 /**
  * @author Piotr Siczek
  */
 @RestController
-@RequestMapping("/user")
 public class LoginController {
 
     private UserApi api;
@@ -23,8 +24,13 @@ public class LoginController {
         this.api = api;
     }
 
-    @RequestMapping("/login")
-    public ResponseEntity<UserResult> loginUser() {
-        return new ResponseEntity<>(api.loginUser(), HttpStatus.OK);
-    }
+	@RequestMapping("/user")
+	public Principal user(Principal principal) {
+		return principal;
+	}
+
+//    @RequestMapping("/login")
+//    public ResponseEntity<UserResult> loginUser() {
+//        return new ResponseEntity<>(api.loginUser(), HttpStatus.OK);
+//    }
 }
