@@ -16,10 +16,12 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.core.convert.*;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import static java.util.Collections.singletonList;
 
 @Configuration
+@EnableMongoRepositories("com.spiczek.kanban.repositories")
 @PropertySource("classpath:mongo.properties")
 public class MongoConfig {
 

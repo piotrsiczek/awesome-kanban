@@ -17,6 +17,7 @@ public class User {
     private String name;
     private String surname;
     private String password;
+	private List<String> roles = new ArrayList<>();
     private List<String> boardIds = new ArrayList<>();
 
     public User(String login, String name, String surname, String password) {
