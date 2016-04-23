@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/resources/**", "/signup", "/about").permitAll()
 				.anyRequest().authenticated()
 				.and()
-			.httpBasic();
+			.httpBasic().and().csrf().disable();
 	}
 
 	//	@Override

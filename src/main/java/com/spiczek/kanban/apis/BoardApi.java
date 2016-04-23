@@ -1,5 +1,6 @@
 package com.spiczek.kanban.apis;
 
+import com.spiczek.kanban.collections.Acl;
 import com.spiczek.kanban.collections.Board;
 import com.spiczek.kanban.collections.Group;
 import com.spiczek.kanban.collections.Item;
@@ -33,8 +34,8 @@ public class BoardApi extends KanbanApi {
         return board;
     }
 
-    public Group createGroup(String title, String boardId) {
-        Group group = new Group(title);
+    public Group createGroup(String title, String boardId, String ownerId) {
+        Group group = new Group(title, new Acl(ownerId));
         mongo.insert(group);
 
         mongo.updateFirst(query(where("_id").is(boardId)), new Update().push("groupIds", group.getId()), Board.class);
@@ -62,10 +63,10 @@ public class BoardApi extends KanbanApi {
         List<GroupResult> result = new ArrayList<>();
         for (Group g : groups) {
             if (g.getItemIds() == null) {
-                result.add(new GroupResult(g.getId(), g.getTitle()));
+                result.add(new GroupResult(g.getId(), g.getTitle(), g.getAcl()));
             } else {
                 List<Item> items = mongo.find(query(where("_id").in(g.getItemIds())), Item.class);
-                result.add(new GroupResult(g.getId(), g.getTitle(), items));
+                result.add(new GroupResult(g.getId(), g.getTitle(), items, g.getAcl()));
             }
         }
 
