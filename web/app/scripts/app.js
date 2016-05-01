@@ -13,21 +13,22 @@ angular
 		'ngAnimate',
 		'ngCookies',
 		'ngResource',
-		'ngRoute'
+		'ngRoute',
+		'service.security',
+		//'service.security',
+		'ctrl.main'
 	])
 	.config(function ($routeProvider) {
 		$routeProvider
-			.when('/', {
-				templateUrl: 'views/main.html',
-				controller: 'MainCtrl',
-				controllerAs: 'main'
+			.when('/login', {
+				templateUrl: 'views/login.html',
+				controller: 'login-ctrl'
 			})
-			.when('/about', {
-				templateUrl: 'views/about.html',
-				controller: 'AboutCtrl',
-				controllerAs: 'about'
+			.when('/board', {
+				templateUrl: 'views/board.html',
+				controller: 'board-ctrl'
 			})
 			.otherwise({
-				redirectTo: '/'
+				redirectTo: '/board'
 			});
 	});
