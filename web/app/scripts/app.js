@@ -16,6 +16,7 @@ angular
 		'ngRoute',
 		'service.security',
 		//'service.security',
+		'common',
 		'ctrl.main'
 	])
 	.config(function ($routeProvider) {

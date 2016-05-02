@@ -1,0 +1,1 @@
+curl kanban_web:wanban_web_1234@localhost:8089/kanban/oauth/token -d grant_type=password -d username=admin -d password=admin

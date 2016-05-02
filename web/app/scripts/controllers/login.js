@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ctrl.login', [])
-	.controller('login-ctrl', function ($scope, $http, $location, security) {
+	.controller('login-ctrl', function ($scope, $http, $location, security, $httpParamSerializer) {
 
 	if ($scope.auth) {
 		$location.path("/board")
@@ -13,18 +13,41 @@ angular.module('ctrl.login', [])
 			console.log(basic);
 
 
-			$http.defaults.headers.common['Authorization'] = 'Basic ' + basic; // jshint ignore:line
+			//$http.defaults.headers.common['Authorization'] = 'Basic ' + basic; // jshint ignore:line
 			//$http.defaults.headers.common['Authorization'] = 'Bearer ccb6437b-0c0c-48c9-bb07-60c1289f21ce'; // jshint ignore:line
 
-			$http.post('http://localhost:8089/kanban/oauth/token',
-				{grant_type: 'password',
-					username: 'admin',
-					password: 'admin'}).success(function(data, status, headers, config) {
-				console.log(status);
-			}).error(function(data, status, headers, config) {
-				console.log(data);
-				console.log(status);
+
+
+			$scope.data = {grant_type:"password", username: "", password: "", client_id: "kanban_web"};
+
+			var req = {
+				method: 'POST',
+				url: "http://localhost:8089/kanban/oauth/token",
+				headers: {
+					"Authorization": "Basic " + basic,
+					"Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+				},
+				data: $httpParamSerializer($scope.data)
+			};
+			$http(req).then(function(data){
+				$http.defaults.headers.common.Authorization= 'Bearer ' + data.data.access_token;
+				$cookies.put("access_token", data.data.access_token);
+				window.location.href="index";
 			});
+
+			//$http.post('http://localhost:8089/kanban/oauth/token',
+			//	{grant_type: 'password',
+			//		username: 'admin',
+			//		password: 'admin',
+			//		client_id: 'kanban_web'},
+			//	{"Authorization": 'Basic ' + basic,
+			//		"Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+			//}).success(function(data, status, headers, config) {
+			//	console.log(status);
+			//}).error(function(data, status, headers, config) {
+			//	console.log(data);
+			//	console.log(status);
+			//});
 
 
 			//$http.get('http://localhost:8089/kanban/api/board?groupId=571a993f31dac19cc55ce156', {headers: {Authorization: 'Bearer ccb6437b-0c0c-48c9-bb07-60c1289f21ce'}}).success(function(data) {

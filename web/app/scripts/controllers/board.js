@@ -6,7 +6,7 @@ angular.module('ctrl.board', [])
 
 		//security.isAuthenticated();
 
-
+		console.log($scope.auth);
 		if (!$scope.auth) {
 			$location.path('/login')
 		}

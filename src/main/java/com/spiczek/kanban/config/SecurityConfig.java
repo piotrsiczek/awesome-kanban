@@ -1,18 +1,23 @@
 package com.spiczek.kanban.config;
 
+import com.spiczek.kanban.controllers.CORSFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 
 /**
  * @author Piotr Siczek
  */
 @Configuration
 @EnableWebSecurity
+@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
@@ -38,7 +43,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/resources/**", "/signup", "/about").permitAll()
 				.anyRequest().authenticated()
 				.and()
-			.httpBasic().and().csrf().disable();
+			.httpBasic().and()
+				.addFilterBefore(new CORSFilter(), ChannelProcessingFilter.class)
+			.csrf().disable();
 	}
 
 	//	@Override

@@ -22,6 +22,7 @@ import java.util.List;
  * @author Piotr Siczek
  */
 @RestController
+@RequestMapping("/api")
 public class BoardController {
 
     private BoardApi api;
