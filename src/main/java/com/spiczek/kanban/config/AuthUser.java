@@ -13,14 +13,19 @@ import java.util.List;
  */
 @Getter
 public class AuthUser extends org.springframework.security.core.userdetails.User {
-    private String id;
-    private String email;
-    private String surname;
+	private String id;
+	private String login;
+	private String name;
+	private String surname;
+	private List<String> boardIds;
 
     public AuthUser(User user) {
         super(user.getName(), user.getPassword(), asList(user.getRoles()));
         this.id = user.getId();
+	    this.login = user.getLogin();
+	    this.name = user.getName();
         this.surname = user.getSurname();
+	    this.boardIds = user.getBoardIds();
     }
 
     private static List<GrantedAuthority> asList(List<String> roles) {

@@ -3,19 +3,23 @@
 angular.module('ctrl.login', [])
 	.controller('login-ctrl', function ($scope, $http, $location, security, $httpParamSerializer) {
 
-	if ($scope.auth) {
-		$location.path("/board")
-	}
-
 		$scope.login = function() {
 
 			var basic = security.login("kanban_web", "wanban_web_1234");
 			console.log(basic);
 
+			$scope.auth = true;
+			var token = 'd7d59b26-5e48-4ad0-9961-7e20b3388d97';
+			$http.defaults.headers.common['Authorization'] = 'Bearer ' + token; // jshint ignore:line
+			$location.path("/#/board");
+
+			$http.get('http://localhost:8089/kanban/user/data').success(function(data) {
+					$scope.user = data;
+				}).error(function(data) {
+					console.log(data);
+				});
 
 			//$http.defaults.headers.common['Authorization'] = 'Basic ' + basic; // jshint ignore:line
-			//$http.defaults.headers.common['Authorization'] = 'Bearer ccb6437b-0c0c-48c9-bb07-60c1289f21ce'; // jshint ignore:line
-
 
 			//$scope.data = {grant_type:"password", username: "", password: "", client_id: "kanban_web"};
 			//
@@ -34,50 +38,38 @@ angular.module('ctrl.login', [])
 			//	window.location.href="index";
 			//});
 
-			$http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+			//$http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+			//
+			//$scope.data = {grant_type:"password", username: "admin", password: "admin", client_id: "kanban_web"};
+			//$scope.encoded = btoa("kanban_web:wanban_web_1234");
+			//
+			//
+			//var data = "username=admin&password=admin&grant_type=password&scope=read%20write&" +
+			//	"client_secret=wanban_web_1234&client_id=kanban_web";
+			//
+			//console.log($scope.encoded);
+			//$http.post('http://localhost:8089/kanban/oauth/token',
+			//	data,
+			//	{'Content-Type': 'application/x-www-form-urlencoded',
+			//		'Accept': 'application/json',
+			//		'Authorization': "Basic " + $scope.encoded
+			//}).success(function(data, status, headers, config) {
+			//	console.log(status);
+			//}).error(function(data, status, headers, config) {
+			//	console.log(data);
+			//	console.log(status);
+			//});
 
-			$scope.data = {grant_type:"password", username: "admin", password: "admin", client_id: "kanban_web"};
-			$scope.encoded = btoa("kanban_web:wanban_web_1234");
-
-
-			var data = "username=admin&password=admin&grant_type=password&scope=read%20write&" +
-				"client_secret=wanban_web_1234&client_id=kanban_web";
-
-			console.log($scope.encoded);
-			$http.post('http://localhost:8089/kanban/oauth/token',
-				data,
-				{'Content-Type': 'application/x-www-form-urlencoded',
-					'Accept': 'application/json',
-					'Authorization': "Basic " + $scope.encoded
-			}).success(function(data, status, headers, config) {
-				console.log(status);
-			}).error(function(data, status, headers, config) {
-				console.log(data);
-				console.log(status);
-			});
-
-
-			//$http.get('http://localhost:8089/kanban/about').success(function(data) {
+			//
+			//$http.get('http://localhost:8089/kanban/about',
+			//	{"headers": {""}}).success(function(data) {
 			//	console.log(data);
 			//}).error(function(data) {
 			//	console.log(data);
 			//});
 
-			//$http({
-			//	method: 'GET',
-			//	url: 'http://localhost:8089/kanban/api/board?groupId=571a993f31dac19cc55ce156',
-			//	headers: {
-			//		'Authorization': 'Basic bb17e2d8-9c78-4a3f-baa5-811762e51773',
-			//		'Accept': 'application/json',
-			//		'X-Requested-With': 'XMLHttpRequest'
-			//	}
-			//}).then(function(response) {
-			//	if (response.data == 'ok') {
-			//		// success
-			//	} else {
-			//		// failed
-			//	}
-			//});
+
+
 
 			//$http.get('http://localhost:8089/kanban/about').success(function(data) {
 			//		console.log(data);

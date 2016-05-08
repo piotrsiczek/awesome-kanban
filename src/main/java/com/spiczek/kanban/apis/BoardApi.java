@@ -85,4 +85,8 @@ public class BoardApi extends KanbanApi {
 
 
     }
+
+	public List<Board> getUserBoards(List<String> boardIds) {
+		return mongo.find(query(where("_id").in(boardIds)), Board.class);
+	}
 }

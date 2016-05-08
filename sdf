@@ -1,1 +1,3 @@
 curl kanban_web:wanban_web_1234@localhost:8089/kanban/oauth/token -d grant_type=password -d username=admin -d password=admin
+
+curl -v localhost:8089/kanban/about -H "Authorization: Bearer 9e396176-4f3d-45c2-82d4-618799efb048"
