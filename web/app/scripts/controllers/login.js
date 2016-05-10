@@ -9,7 +9,7 @@ angular.module('ctrl.login', [])
 			console.log(basic);
 
 			$scope.auth = true;
-			var token = 'd7d59b26-5e48-4ad0-9961-7e20b3388d97';
+			var token = '50b597df-f4be-4d2d-a15f-92aa68835e17';
 			$http.defaults.headers.common['Authorization'] = 'Bearer ' + token; // jshint ignore:line
 			$location.path("/#/board");
 

@@ -12,7 +12,9 @@ angular.module('ctrl.board', [])
 		//var token = '9d601780-da42-4b2f-ad72-6c52728ea084';
 		//$http.defaults.headers.common['Authorization'] = 'Bearer ' + token; // jshint ignore:line
 
-		$http.get('http://localhost:8089/kanban/api/board?groupId=571a993f31dac19cc55ce156').success(function(data) {
+		var groups = ['572fb78b44ae19fa9ce6eeae', '572fb78b44ae19fa9ce6eeaf'];
+
+		$http.get('http://localhost:8089/kanban/api/board?groupId=' + groups).success(function(data) {
 			console.log(data);
 		}).error(function(data) {
 			console.log(data);

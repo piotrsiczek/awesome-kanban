@@ -34,22 +34,28 @@ public class BoardApi extends KanbanApi {
         return board;
     }
 
+	public List<Board> getUserBoards(List<String> boardIds) {
+		return mongo.find(query(where("_id").in(boardIds)), Board.class);
+	}
+
     public Group createGroup(String title, String boardId, String ownerId) {
-        Group group = new Group(title, new Acl(ownerId));
-        mongo.insert(group);
-
-        mongo.updateFirst(query(where("_id").is(boardId)), new Update().push("groupIds", group.getId()), Board.class);
-
-        return group;
+//        Group group = new Group(title, new Acl(ownerId));
+//        mongo.insert(group);
+//
+//        mongo.updateFirst(query(where("_id").is(boardId)), new Update().push("groupIds", group.getId()), Board.class);
+//
+//        return group;
+	    return null;
     }
 
     public Item createItem(String text, String groupId) {
-        Item item = new Item(groupId, text);
-        mongo.insert(item);
+//        Item item = new Item(groupId, text);
+//        mongo.insert(item);
+//
+//        mongo.updateFirst(query(where("_id").is(groupId)), new Update().push("itemIds", item.getId()), Group.class);
 
-        mongo.updateFirst(query(where("_id").is(groupId)), new Update().push("itemIds", item.getId()), Group.class);
-
-        return item;
+//        return item;
+	    return null;
     }
 
     public void changeItemStatus(String groupIdFrom, String groupIdTo, String itemId) {
@@ -57,36 +63,23 @@ public class BoardApi extends KanbanApi {
         mongo.updateFirst(query(where("_id").is(groupIdTo)), new Update().push("itemIds", itemId), Group.class);
     }
 
-    public List<GroupResult> getBoard(List<String> groupIds) {
+    public List<Group> getBoard(List<String> groupIds) {
         List<Group> groups = mongo.find(query(where("_id").in(groupIds)), Group.class);
-
-        List<GroupResult> result = new ArrayList<>();
-        for (Group g : groups) {
-            if (g.getItemIds() == null) {
-                result.add(new GroupResult(g.getId(), g.getTitle(), g.getAcl()));
-            } else {
-                List<Item> items = mongo.find(query(where("_id").in(g.getItemIds())), Item.class);
-                result.add(new GroupResult(g.getId(), g.getTitle(), items, g.getAcl()));
-            }
-        }
-
-        return result;
-
-//        List<String> itemIds = boards.stream().map(Group::getItemIds)
-//                                        .flatMap(Collection::stream)
-//                                        .collect(Collectors.toList());
 //
-//        List<Item> items = mongo.find(query(where("_id").in(itemIds)), Item.class);
-//        items.stream().
-//
-//        for (Group g : boards) {
-//
+//        List<GroupResult> result = new ArrayList<>();
+//        for (Group g : groups) {
+//            if (g.getItemIds() == null) {
+//                result.add(new GroupResult(g.getId(), g.getTitle(), g.getAcl()));
+//            } else {
+//                List<Item> items = mongo.find(query(where("_id").in(g.getItemIds())), Item.class);
+//                result.add(new GroupResult(g.getId(), g.getTitle(), items, g.getAcl()));
+//            }
 //        }
+//
+//        return result;
 
-
+		return groups;
     }
 
-	public List<Board> getUserBoards(List<String> boardIds) {
-		return mongo.find(query(where("_id").in(boardIds)), Board.class);
-	}
+
 }

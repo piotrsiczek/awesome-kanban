@@ -10,15 +10,16 @@ import java.util.List;
  * @author Piotr Siczek
  */
 @Getter
-@Document()
+@Document
 public class Group {
     private String id;
     private String title;
-    private List<String> itemIds  = new ArrayList<>();
+    private List<Item> items  = new ArrayList<>();
 	private Acl acl;
 
-    public Group(String title, Acl acl) {
+    public Group(String title, List<Item> items, Acl acl) {
         this.title = title;
+	    this.items = items;
 	    this.acl = acl;
     }
 }
