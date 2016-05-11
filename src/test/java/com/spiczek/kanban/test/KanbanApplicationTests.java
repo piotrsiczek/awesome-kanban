@@ -2,6 +2,7 @@ package com.spiczek.kanban.test;
 
 import com.spiczek.kanban.KanbanApplication;
 import com.spiczek.kanban.collections.*;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class KanbanApplicationTests {
 	}
 
     @Test
+    @Ignore
     public void createUserProfile() {
 	    User user = new User(USER_LOGIN, USER_NAME, USER_SURNAME, USER_PASS);
 	    mongo.insert(user);

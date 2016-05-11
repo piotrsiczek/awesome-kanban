@@ -39,7 +39,7 @@ public class BoardController {
     @RequestMapping("/board")
     public ResponseEntity<List<Group>> getBoard(@RequestParam(name = "groupId") List<String> groupIds) {
 	    String id = getAuthenticatedUserId();
-	    List<Group> groups = api.getBoard(groupIds);
+	    List<Group> groups = api.getBoardDetails(groupIds);
 
 	    if(!groups.stream().anyMatch(g -> g.getAcl().getCreator().equals(id) || g.getAcl().getR().equals(id))) {
 		    return new ResponseEntity<>(HttpStatus.FORBIDDEN);

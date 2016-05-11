@@ -17,6 +17,11 @@ public class Group {
     private List<Item> items  = new ArrayList<>();
 	private Acl acl;
 
+//	public Group(String title, Acl acl) {
+//		this.title = title;
+//		this.acl = acl;
+//	}
+
     public Group(String title, List<Item> items, Acl acl) {
         this.title = title;
 	    this.items = items;

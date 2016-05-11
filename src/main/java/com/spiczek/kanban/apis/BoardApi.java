@@ -1,16 +1,11 @@
 package com.spiczek.kanban.apis;
 
-import com.spiczek.kanban.collections.Acl;
-import com.spiczek.kanban.collections.Board;
-import com.spiczek.kanban.collections.Group;
-import com.spiczek.kanban.collections.Item;
-import com.spiczek.kanban.model.GroupResult;
+import com.spiczek.kanban.collections.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -31,6 +26,8 @@ public class BoardApi extends KanbanApi {
         Board board = new Board(ownerId, title);
         mongo.insert(board);
 
+	    mongo.updateFirst(query(where("_id").is(ownerId)), new Update().push("boardIds", board.getId()), User.class);
+
         return board;
     }
 
@@ -39,47 +36,30 @@ public class BoardApi extends KanbanApi {
 	}
 
     public Group createGroup(String title, String boardId, String ownerId) {
-//        Group group = new Group(title, new Acl(ownerId));
-//        mongo.insert(group);
-//
-//        mongo.updateFirst(query(where("_id").is(boardId)), new Update().push("groupIds", group.getId()), Board.class);
-//
-//        return group;
-	    return null;
+        Group group = new Group(title, Arrays.asList(), new Acl(ownerId));
+        mongo.insert(group);
+
+        mongo.updateFirst(query(where("_id").is(boardId)), new Update().push("groupIds", group.getId()), Board.class);
+
+        return group;
     }
 
     public Item createItem(String text, String groupId) {
-//        Item item = new Item(groupId, text);
-//        mongo.insert(item);
-//
-//        mongo.updateFirst(query(where("_id").is(groupId)), new Update().push("itemIds", item.getId()), Group.class);
+        Item item = new Item(text);
+        mongo.insert(item);
 
-//        return item;
-	    return null;
+        mongo.updateFirst(query(where("_id").is(groupId)), new Update().push("items", item), Group.class);
+
+        return item;
     }
+
+	public List<Group> getBoardDetails(List<String> groupIds) {
+		return mongo.find(query(where("_id").in(groupIds)), Group.class);
+	}
 
     public void changeItemStatus(String groupIdFrom, String groupIdTo, String itemId) {
         mongo.updateFirst(query(where("_id").is(groupIdFrom)), new Update().pull("itemIds", itemId), Group.class);
         mongo.updateFirst(query(where("_id").is(groupIdTo)), new Update().push("itemIds", itemId), Group.class);
     }
-
-    public List<Group> getBoard(List<String> groupIds) {
-        List<Group> groups = mongo.find(query(where("_id").in(groupIds)), Group.class);
-//
-//        List<GroupResult> result = new ArrayList<>();
-//        for (Group g : groups) {
-//            if (g.getItemIds() == null) {
-//                result.add(new GroupResult(g.getId(), g.getTitle(), g.getAcl()));
-//            } else {
-//                List<Item> items = mongo.find(query(where("_id").in(g.getItemIds())), Item.class);
-//                result.add(new GroupResult(g.getId(), g.getTitle(), items, g.getAcl()));
-//            }
-//        }
-//
-//        return result;
-
-		return groups;
-    }
-
 
 }
