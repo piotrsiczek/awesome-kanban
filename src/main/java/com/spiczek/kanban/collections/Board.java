@@ -15,6 +15,7 @@ public class Board {
     private String id;
     private String ownerId;
     private List<String> groupIds = new ArrayList<>();
+    private List<String> userIds = new ArrayList<>();
     private String title;
 
     public Board(String ownerId, String title) {

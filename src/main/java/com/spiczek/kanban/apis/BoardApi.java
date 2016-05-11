@@ -1,5 +1,6 @@
 package com.spiczek.kanban.apis;
 
+import com.mongodb.WriteResult;
 import com.spiczek.kanban.collections.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -48,13 +49,18 @@ public class BoardApi extends KanbanApi {
         Item item = new Item(text);
         mongo.insert(item);
 
-        mongo.updateFirst(query(where("_id").is(groupId)), new Update().push("items", item), Group.class);
+	    WriteResult writeResult = mongo.updateFirst(query(where("_id").is(groupId)), new Update().push("items", item), Group.class);
 
-        return item;
+	    boolean updateOfExisting = writeResult.isUpdateOfExisting();
+	    return item;
     }
 
 	public List<Group> getBoardDetails(List<String> groupIds) {
 		return mongo.find(query(where("_id").in(groupIds)), Group.class);
+	}
+
+	public List<User> getFriendDetails(List<String> userIds) {
+		return mongo.find(query(where("_id").in(userIds)), User.class);
 	}
 
     public void changeItemStatus(String groupIdFrom, String groupIdTo, String itemId) {
@@ -62,4 +68,8 @@ public class BoardApi extends KanbanApi {
         mongo.updateFirst(query(where("_id").is(groupIdTo)), new Update().push("itemIds", itemId), Group.class);
     }
 
+	public void inviteFriend(String boardId, String friendId) {
+		mongo.updateFirst(query(where("_id").is(friendId)), new Update().push("invitedBoardIds", boardId), User.class);
+		mongo.updateFirst(query(where("_id").is(friendId)), new Update().push("userIds", friendId), Board.class);
+	}
 }

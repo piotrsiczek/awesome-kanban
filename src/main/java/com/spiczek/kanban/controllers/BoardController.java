@@ -4,12 +4,9 @@ import com.spiczek.kanban.apis.BoardApi;
 import com.spiczek.kanban.collections.Board;
 import com.spiczek.kanban.collections.Group;
 import com.spiczek.kanban.collections.Item;
+import com.spiczek.kanban.collections.User;
 import com.spiczek.kanban.config.AuthUser;
-import com.spiczek.kanban.model.GroupResult;
-import com.spiczek.kanban.model.data.BoardData;
-import com.spiczek.kanban.model.data.GroupData;
-import com.spiczek.kanban.model.data.ItemData;
-import com.spiczek.kanban.model.data.ItemStatusData;
+import com.spiczek.kanban.model.data.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,9 +34,10 @@ public class BoardController {
     }
 
     @RequestMapping("/board")
-    public ResponseEntity<List<Group>> getBoard(@RequestParam(name = "groupId") List<String> groupIds) {
+    public ResponseEntity<List<Group>> getBoard(@RequestParam List<String> userIds, @RequestParam(name = "groupId") List<String> groupIds) {
 	    String id = getAuthenticatedUserId();
 	    List<Group> groups = api.getBoardDetails(groupIds);
+	    List<User> users = api.getFriendDetails(userIds);
 
 	    if(!groups.stream().anyMatch(g -> g.getAcl().getCreator().equals(id) || g.getAcl().getR().equals(id))) {
 		    return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -67,4 +65,9 @@ public class BoardController {
     public void changeItemStatus(@RequestBody ItemStatusData data) {
         api.changeItemStatus(data.getGroupIdFrom(), data.getGroupIdTo(), data.getItemId());
     }
+
+	@RequestMapping(value = "/friend", method = RequestMethod.POST)
+	public void inviteFriend(@RequestBody FriendData data) {
+		api.inviteFriend(data.getBoardId(), data.getFriendId());
+	}
 }

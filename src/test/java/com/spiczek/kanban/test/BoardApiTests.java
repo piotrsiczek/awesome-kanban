@@ -99,4 +99,14 @@ public class BoardApiTests {
 		assertThat(g.getItems().get(0).getText()).isEqualTo(TEST_GROUP_TITLE);
 	}
 
+	@Test
+	public void inviteFriendsTest() {
+		String boardId = whenUser.createdBoard();
+		User user = whenUser.isSignedIn();
+		User friend = whenUser.getFriend();
+
+		boardApi.inviteFriend(boardId, friend.getId());
+
+	}
+
 }

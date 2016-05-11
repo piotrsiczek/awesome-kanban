@@ -19,6 +19,7 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 @Component
 public class UserBehaviour {
 	public static final String TEST_USER_LOGIN = "test_user";
+	public static final String TEST_FRIEND_LOGIN = "test_friend";
 	public static final String TEST_USER_NAME = "name";
 	public static final String TEST_USER_SURNAME = "surname";
 	public static final String TEST_USER_PASSWORD = "password";
@@ -35,14 +36,22 @@ public class UserBehaviour {
 	@Autowired
 	private BoardApi boardApi;
 
-	public User isSignedIn() {
-		User user = userRepository.findUserByLogin(TEST_USER_LOGIN);
+	public User getUser(String login) {
+		User user = userRepository.findUserByLogin(login);
 		if (user == null) {
-			user = new User(TEST_USER_LOGIN, TEST_USER_NAME, TEST_USER_SURNAME, TEST_USER_PASSWORD);
+			user = new User(login, TEST_USER_NAME, TEST_USER_SURNAME, TEST_USER_PASSWORD);
 			userRepository.save(user);
 		}
 
 		return user;
+	}
+
+	public User isSignedIn() {
+		return getUser(TEST_USER_LOGIN);
+	}
+
+	public User getFriend() {
+		return getUser(TEST_FRIEND_LOGIN);
 	}
 
 	public String createdBoard() {
