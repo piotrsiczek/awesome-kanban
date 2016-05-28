@@ -8,57 +8,57 @@ angular.module('ctrl.login', [])
 			var basic = security.login("kanban_web", "wanban_web_1234");
 			console.log(basic);
 
-			$scope.auth = true;
-			var token = '50b597df-f4be-4d2d-a15f-92aa68835e17';
-			$http.defaults.headers.common['Authorization'] = 'Bearer ' + token; // jshint ignore:line
-			$location.path("/#/board");
+			// $scope.auth = true;
+			// var token = '50b597df-f4be-4d2d-a15f-92aa68835e17';
+			// $http.defaults.headers.common['Authorization'] = 'Bearer ' + token; // jshint ignore:line
+			// $location.path("/#/board");
 
-			$http.get('http://localhost:8089/kanban/user/data').success(function(data) {
-					$scope.user = data;
-				}).error(function(data) {
-					console.log(data);
-				});
+			// $http.get('http://localhost:8089/kanban/user/data').success(function(data) {
+			// 		$scope.user = data;
+			// 	}).error(function(data) {
+			// 		console.log(data);
+			// 	});
 
-			//$http.defaults.headers.common['Authorization'] = 'Basic ' + basic; // jshint ignore:line
+			$http.defaults.headers.common['Authorization'] = 'Basic ' + basic; // jshint ignore:line
 
-			//$scope.data = {grant_type:"password", username: "", password: "", client_id: "kanban_web"};
-			//
-			//var req = {
-			//	method: 'POST',
-			//	url: "http://localhost:8089/kanban/oauth/token",
-			//	headers: {
-			//		"Authorization": "Basic " + basic,
-			//		"Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-			//	},
-			//	data: $httpParamSerializer($scope.data)
-			//};
-			//$http(req).then(function(data){
-			//	$http.defaults.headers.common.Authorization= 'Bearer ' + data.data.access_token;
-			//	$cookies.put("access_token", data.data.access_token);
-			//	window.location.href="index";
-			//});
+			$scope.data = {grant_type:"password", username: "", password: "", client_id: "kanban_web"};
 
-			//$http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+			var req = {
+				method: 'POST',
+				url: "http://localhost:8089/kanban/oauth/token",
+				headers: {
+					"Authorization": "Basic " + basic,
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				data: $httpParamSerializer({'grant_type': 'password', 'username': 'admin', 'password': 'admin'})
+			};
+			$http(req).then(function(data){
+				$http.defaults.headers.common.Authorization= 'Bearer ' + data.data.access_token;
+				$cookies.put("access_token", data.data.access_token);
+				window.location.href="index";
+			});
+
+			// $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 			//
-			//$scope.data = {grant_type:"password", username: "admin", password: "admin", client_id: "kanban_web"};
-			//$scope.encoded = btoa("kanban_web:wanban_web_1234");
+			// $scope.data = {grant_type:"password", username: "admin", password: "admin", client_id: "kanban_web"};
+			// $scope.encoded = btoa("kanban_web:wanban_web_1234");
 			//
 			//
-			//var data = "username=admin&password=admin&grant_type=password&scope=read%20write&" +
-			//	"client_secret=wanban_web_1234&client_id=kanban_web";
+			// var data = "username=admin&password=admin&grant_type=password&scope=read%20write&" +
+			// 	"client_secret=wanban_web_1234&client_id=kanban_web";
 			//
-			//console.log($scope.encoded);
-			//$http.post('http://localhost:8089/kanban/oauth/token',
-			//	data,
-			//	{'Content-Type': 'application/x-www-form-urlencoded',
-			//		'Accept': 'application/json',
-			//		'Authorization': "Basic " + $scope.encoded
-			//}).success(function(data, status, headers, config) {
-			//	console.log(status);
-			//}).error(function(data, status, headers, config) {
-			//	console.log(data);
-			//	console.log(status);
-			//});
+			// console.log($scope.encoded);
+			// $http.post('http://localhost:8089/kanban/oauth/token',
+			// 	data,
+			// 	{'Content-Type': 'application/x-www-form-urlencoded',
+			// 		'Accept': 'application/json',
+			// 		'Authorization': "Basic " + $scope.encoded
+			// }).success(function(data, status, headers, config) {
+			// 	console.log(status);
+			// }).error(function(data, status, headers, config) {
+			// 	console.log(data);
+			// 	console.log(status);
+			// });
 
 			//
 			//$http.get('http://localhost:8089/kanban/about',
