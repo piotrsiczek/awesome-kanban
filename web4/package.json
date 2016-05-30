@@ -1,0 +1,108 @@
+{
+  "id": "asdf",
+  "name": "asdf",
+  "version": "0.0.0",
+  "description": "Something really, really great ...",
+  "author": {
+    "name": "spiczek@gmail.com",
+    "email": "Piotr Siczek"
+  },
+  "contributors": [
+    {}
+  ],
+  "scripts": {
+    "start": "grunt fun",
+    "test": "grunt test",
+    "docker": "grunt build && docker build -t angular2-ts .",
+    
+    "postinstall": "npm run typings install && grunt init",
+    "typings": "typings"
+    
+    
+  },
+  "repository": "https://github.com/piotrsiczek/awesome-kanban.git",
+  "keywords": [
+    "angular"
+  ],
+  "license": "SEE LICENSE IN LICENSE",
+  "dependencies": {},
+  "devDependencies": {
+    "@angular/common": "^2.0.0-rc.1",
+    "@angular/compiler": "^2.0.0-rc.1",
+    "@angular/core": "^2.0.0-rc.1",
+    "@angular/http": "^2.0.0-rc.1",
+    "@angular/platform-browser": "^2.0.0-rc.1",
+    "@angular/platform-browser-dynamic": "^2.0.0-rc.1",
+    "@angular/router": "^2.0.0-rc.1",
+    "angular2-in-memory-web-api": "0.0.10",
+    "autoprefixer": "^6.3.6",
+    
+    "browser-sync": "^2.12.5",
+    "chalk": "^1.1.3",
+    
+    "codelyzer": "0.0.19",
+    
+    "concurrently": "^2.0.0",
+    "cssnano": "^3.5.2",
+    "es6-shim": "^0.35.0",
+    "eyeglass": "^0.8.3",
+    "grunt": "^1.0.1",
+    "grunt-available-tasks": "^0.6.2",
+    "grunt-browser-sync": "^2.2.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^1.0.1",
+    "grunt-contrib-imagemin": "^1.0.0",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-eslint": "^18.1.0",
+    "grunt-filerev": "^2.3.1",
+    "grunt-karma": "^1.0.0",
+    "grunt-newer": "^1.2.0",
+    "grunt-postcss": "^0.8.0",
+    "grunt-processhtml": "^0.3.13",
+    "grunt-sass": "^1.1.0",
+    "grunt-sass-globbing": "^1.5.1",
+    "grunt-systemjs-builder": "^0.2.7",
+    
+    "grunt-ts": "^5.5.0-beta.2",
+    "grunt-tslint": "^3.1.0",
+    
+    "grunt-usemin": "^3.1.1",
+    "imagemin-gifsicle": "^5.0.0",
+    "imagemin-jpegtran": "^5.0.0",
+    "imagemin-optipng": "^5.0.0",
+    "imagemin-svgo": "^5.0.1",
+    "jasmine-core": "^2.4.1",
+    "jit-grunt": "^0.10.0",
+    "karma": "^0.13.22",
+    
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-coverage": "^1.0.0",
+    "karma-jasmine": "^1.0.2",
+    "karma-jspm": "^2.1.0",
+    "karma-junit-reporter": "^1.0.0",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "load-grunt-config": "^0.19.2",
+    "load-grunt-tasks": "^3.5.0",
+    "merge": "^1.2.0",
+    "nightwatch": "^0.8.18",
+    "node-sass": "^3.7.0",
+    "phantomjs-prebuilt": "^2.1.7",
+    "reflect-metadata": "^0.1.3",
+    "rxjs": "^5.0.0-beta.8",
+    "systemjs": "^0.19.27",
+    
+    "tslint": "^3.8.1",
+    "typescript": "^1.8.10",
+    "typescript-eslint-parser": "0.1.0-alpha-1",
+    "typings": "^1.0.4",
+    
+    "time-grunt": "^1.3.0",
+    "zone.js": "^0.6.12"
+  },
+  "engines": {
+    "node": ">=5.4.0"
+  }
+}
