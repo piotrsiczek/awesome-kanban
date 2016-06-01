@@ -3,7 +3,7 @@ import { Router, Routes, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/ro
 import {LoginComponent} from './login';
 import {OauthService} from "../../services/oauth-service";
 import {OnInit} from "../../../../../web2/node_modules/angular2/src/core/linker/interfaces";
-// import {AuxRoute} from '@angular/src/router/route_config_impl';
+import {AuxRoute} from "@angular/router-deprecated/index";
 
 @Component( {
   directives: [ROUTER_DIRECTIVES],
@@ -14,7 +14,7 @@ import {OnInit} from "../../../../../web2/node_modules/angular2/src/core/linker/
   templateUrl : 'src/app/templates/app.html'
 } )
 @Routes([
-  // new AuxRoute({aux: 'test', path: '/login', aux: 'login-outlet', component: LoginComponent})
+  new AuxRoute({path: '/login', aux: 'login-outlet', component: LoginComponent})
 ])
 export class AppComponent implements OnInit {
 
