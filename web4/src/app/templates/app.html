@@ -1,0 +1,23 @@
+<header>
+  <nav>
+    <div class="main-nav">
+      <div class="left"></div>
+      <div class="center">
+        <p>Awesome Kanban Board</p>
+      </div>
+      <div class="right">
+        <a [routerLink]="['/login']">login</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div>
+  <router-outlet></router-outlet>
+</div>
+
+<div class="footer">
+  <div class="container">
+    <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+  </div>
+</div>

@@ -1,29 +1,37 @@
-// importables
 import { Component } from '@angular/core';
+import { Router, Routes, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router';
+import {LoginComponent} from './login';
+import {OauthService} from "../../services/oauth-service";
+import {OnInit} from "../../../../../web2/node_modules/angular2/src/core/linker/interfaces";
+// import {AuxRoute} from '@angular/src/router/route_config_impl';
 
-// decorator for component constructor
 @Component( {
-  selector : 'sg-app',
-  template : '<h4>Hello World. I am ... {{ name }}</h4>'
+  directives: [ROUTER_DIRECTIVES],
+  providers: [
+    ROUTER_PROVIDERS
+  ],
+  selector : 'app',
+  templateUrl : 'src/app/templates/app.html'
 } )
+@Routes([
+  // new AuxRoute({aux: 'test', path: '/login', aux: 'login-outlet', component: LoginComponent})
+])
+export class AppComponent implements OnInit {
 
-// component
-export class AppComponent { // it is recommended to export class in place
+  public template = 'asdf';
 
-  // types and variable init
-  public name: string = `wait for it ...`;
-
-  // constructor
-  constructor () {
-
-    // timeout
-    const timeout = 2500; // type is inferred
-
-    // this is a bit artifical
-    setTimeout( () => {
-      this.name = `Angular 2.0`;
-    }, timeout );
-
+  ngOnInit() {
+    console.log('ngOnInit');
   }
 
+  constructor(private router: Router, private securityService: OauthService) {
+    console.log('construct');
+    this.template = 'src/app/templates/app.html';
+
+
+    // if (!securityService.isAuth()) {
+    //   this.router.navigate(['/login']);
+    // }
+
+  }
 }
